@@ -86,7 +86,31 @@ The notebooks you asked about:
   - Report metrics: MSE, MAE, R² on test data (metrics calculated on transformed scale or optionally inverted to original scale).
 - **Inference**
   - Predict on unseen `df2` (e.g., `test2(test(1)).csv`), invert target transform: `np.expm1(y_pred)` and store in output dataframe.
+---
 
+## Approach & modeling strategy ✅
+- **Goal:** Predict property price by combining visual cues from property images with structured tabular metadata to improve accuracy over tabular-only baselines.
+- **Preprocessing & targets:** Images are normalized/resized; tabular features are engineered (age, renovation flags, ratios) and scaled. Targets are transformed with `log1p` (`np.log1p`) during training for stability.
+- **Modeling strategy:** Train separate branches: a CNN image branch (pretrained backbone or custom Conv stack) and a tabular branch (Dense layers with dropout/batch norm). Concatenate embeddings and pass through Dense layers to predict a scalar (log-price). Use MSE (or MAE) on log-target, Adam optimizer, early stopping, and model checkpointing.
+- **Validation & selection:** Use train/test split and optionally cross-validation; track MSE/MAE/R² on validation set; use early stopping and best-checkpoint to avoid overfitting. Consider ensembling XGBoost/LGBM and neural models for robust results.
+- **Inference & postprocessing:** Invert predictions with `np.expm1(preds)` to obtain original price units; format or round as needed for CSV export.
+
+---
+
+## Simple architecture diagram 🔧
+A simple ASCII diagram showing how the image and tabular branches are connected:
+
+```
+[Image Input (224x224x3)] --> [CNN backbone (Conv/Pool or Pretrained)] --> [Image embedding (e.g., 512d)]
+                                                                                  \
+                                                                                   --> [Concatenate] --> [Dense layers] --> [Output: log(price)]
+                                                                                  /
+[Tabular Input (n features)] --> [Dense layers] --> [Tabular embedding (e.g., 64d)]
+```
+
+- **Example dimensions:** Image embedding ~ 256–1024 dims (depending on backbone); tabular embedding ~ 32–128 dims.
+- **Training tips:** Use Dropout and BatchNorm on dense layers, weight decay or L1/L2 regularization for tabular models, and appropriate learning-rate scheduling for the CNN branch.
+  
 ---
 
 ## Common issues & troubleshooting
