@@ -105,8 +105,8 @@ The notebooks you asked about:
   ```
 - Save predictions to CSV:
   ```python
-  df2['predicted_price'] = np.expm1(y_pred.flatten())
-  df2.to_csv('output.csv', index=False)
+  df['predicted_price'] = np.expm1(y_pred.flatten())
+  df.to_csv('output.csv', index=False)
   ```
 
 ---
@@ -119,7 +119,7 @@ The notebooks you asked about:
 ---
 
 ## Contact / license
-- Author: (your name)
+- Author: Tanuj singh 24110022
 - License: MIT (change as desired)
 
 ---
