@@ -1,4 +1,4 @@
-# CDC_Project
+# Satellite-Imagery-Based-Property-Valuation
 
 **Predicting house prices using tabular and image data** ✅
 
@@ -16,26 +16,20 @@ The notebooks you asked about:
 ---
 
 ## Quick setup (Linux)
-1. (Recommended) Use the existing venv in repo if present:
-   ```bash
-   # Activate project virtualenv (if using the included 'myenv')
-   source /home/devil/DL/myenv/bin/activate
-   ```
-
-2. If you prefer to create a new venv:
+1. If you prefer to create a new venv:
    ```bash
    python3 -m venv .venv
    source .venv/bin/activate
    pip install --upgrade pip
    ```
 
-3. Install required packages (minimal list):
+2. Install required packages (minimal list):
    ```bash
    pip install numpy pandas scikit-learn matplotlib seaborn opencv-python pillow tensorflow keras xgboost lightgbm rasterio jupyterlab
    ```
    - Note: `rasterio` may require OS-level GDAL packages or use conda for easier install: `conda install -c conda-forge rasterio`.
 
-4. (Optional) If you want GPU TensorFlow, install the appropriate `tensorflow` (GPU) package and CUDA drivers for your system.
+3. (Optional) If you want GPU TensorFlow, install the appropriate `tensorflow` (GPU) package and CUDA drivers for your system.
 
 ---
 
